@@ -1,0 +1,25 @@
+import re
+import requests
+from bs4 import BeautifulSoup
+import urllib.parse as parse
+
+def spider(url, depth=3):
+    try:
+        response = requests.get(url)
+        soup = BeautifulSoup(html, 'html.parser')
+        found = []
+        for input in soup.find_all([None or 'input', 'password', {'type': 'password'}, string=re.compile("type='password'/input', 'Password'/input', "password"/input"):
+            for attr, value in input:
+                if attr.lower() in ('name', 'username', 'email') or value.strip():
+                    found.append(input)
+        elif input.has_attr("name", "Username" or "Password"):
+            found.append(input)
+        return {'logins': found, 'url': url}
+
+def follow_links(url, max_depth=50):
+    try:
+        response = requests.get(url)
+        soup = BeautifulSoup(html, 'html.parser')
+        for link in soup.find_all("a", limit=max_depth):
+            if 'href' in link:
+                yield parse.urljoin(url, link['href'])
